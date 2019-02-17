@@ -1,0 +1,16 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AudioSetDownloader	../audioset-download-tool.py	/^class AudioSetDownloader():$/;"	kind:class	line:13
+__init__	../audioset-download-tool.py	/^    def __init__(self):$/;"	kind:member	line:15
+argparse	../audioset-download-tool.py	/^import argparse$/;"	kind:namespace	line:1
+audio	../audioset-download-tool.py	/^    audio = AudioSetDownloader()$/;"	kind:variable	line:35
+audioset-download-tool.py	../audioset-download-tool.py	1;"	kind:file	line:1
+deserialize_json	../audioset-download-tool.py	/^    def deserialize_json(self, filepath='support_files\/ontology.json'):$/;"	kind:member	line:18
+get_child_ids	../audioset-download-tool.py	/^    def get_child_ids(self, subset_names: list):$/;"	kind:member	line:26
+json	../audioset-download-tool.py	/^import json$/;"	kind:namespace	line:4
+os	../audioset-download-tool.py	/^import os$/;"	kind:namespace	line:2
+youtube_dl	../audioset-download-tool.py	/^import youtube_dl$/;"	kind:namespace	line:3
