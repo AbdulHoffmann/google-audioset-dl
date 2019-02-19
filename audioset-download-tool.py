@@ -16,9 +16,9 @@ class CLIManager():
         parser = argparse.ArgumentParser(prog='audioset-download-tool', description='Tool developed for flexibly downloading subsets of the Google AudioSet')
         parser.add_argument('name', nargs='+' , help='Class name to be searched in the audio set')
         parser.add_argument('--output-csv', help='Outputs filtered csv files at the files directory', dest='output', action='store_true')
-        parser.add_argument('--download', help='Initiate downloading the audioset', action='store_true')
+        parser.add_argument('--download', help='Initiate downloading the audioset. possible values are "all", "balanced", "unbalanced" or "eval"')
         parser.add_argument('--audio', help='Initiate audio postprocessing', dest='postprocess_audio' , action='store_true')
-        parser.add_argument('--print-df', help='Outputs each of the dataframes to the terminal', dest='postprocess_audio', dest='print', action='store_true')
+        parser.add_argument('--print-df', help='Outputs each of the dataframes to the terminal', dest='print', action='store_true')
         parser.add_argument('--run_unstable', help='Run unstable functions', dest='unstable' , action='store_true')
         parser.add_argument('-v','--verbose', help='Outputs verbose', action='store_true')
 
@@ -34,7 +34,6 @@ class AudioSetDownloader():
         self.csv_files = ('balanced_train_segments.csv', 'eval_segments.csv', 'unbalanced_train_segments.csv')
         self.ids = list()
         self.child_ids = list()
-        self.filtered_list = list()
         self.audio_files_list = list()
         self.csv_output_directory = 'filtered_audioset'
         self.audios_directory = 'audio_files'
@@ -63,24 +62,24 @@ class AudioSetDownloader():
                     self.ids.append(i['id'])
 
     def deserialize_google_csvs(self, files_directory='google_audioset'):
-        csv_data = []
         for filename in self.csv_files:
             with open(os.path.join(os.path.abspath(files_directory), filename)) as csvfile:
-                csv_data.append(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
-                [next(csv_data[-1]) for _ in range(3)] # ignore header
-                yield {filename: list(csv_data[-1])}
+                csv_data = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
+                [next(csv_data) for _ in range(3)] # ignore header
+                yield (filename, list(csv_data))
 
     def filter_description_csvs(self):
         for gen in self.deserialize_google_csvs():
-            filename, content = (tuple(gen.keys())[0], gen.get(tuple(gen.keys())[0]))
+            filtered_list = []
+            filename, content = gen
             for row in content:
                 if CLIManager.args.verbose:
                     print([i for i in row])
                 for id_ in row[3].split(','):
                     for ids in self.child_ids:
                         if id_ in ids:
-                            self.filtered_list.append(row)
-            self.serialize_filtered_csvs(self.filtered_list, filename, self.csv_output_directory)
+                            filtered_list.append(row)
+            self.serialize_filtered_csvs(filtered_list, filename, self.csv_output_directory)
 
     def serialize_filtered_csvs(self, filtered_rows: list, filename: str, files_directory):
         with open(os.path.join(os.path.abspath(files_directory), filename), 'w', newline='') as csvfile:
@@ -95,18 +94,34 @@ class AudioSetDownloader():
             with open(os.path.join(os.path.abspath(self.csv_output_directory), filename)) as csvfile:
                 csv_data = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
                 inter_list.append([row for row in csv_data])
-        return {filename: pd.DataFrame(content, columns=['ytid', 'start_seconds', 'end_seconds', 'positive_labels']) for filename, content in zip(self.csv_files, inter_list)}
+        return {filename: pd.DataFrame(content, columns=['ytid', 'start_seconds', 'end_seconds', 'positive_labels']) for filename, content in zip(self.csv_files, inter_list, )}
 
-    def add_name_column_to_df(self):
-        # f_csv_n, f_csv_c = zip(*self.deserialize_filtered_csvs().items()) # filtered_csv_name and filtered_csv_content
+    def add_name_column_to_df(self, audios_logfile='generated_audios.log'):
         f_csv = self.deserialize_filtered_csvs() # filtered_csvs
-        for f_csv_n, df in f_csv.items():
-            pass
+        with open(os.path.join(os.path.abspath(self.support_files_directory), audios_logfile)) as csvfile:
+            csv_data = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
+            for f_csv_name, df in f_csv.items():
+                print(f_csv_name)
+                # print(df)
+                # [row[1] if df['ytid'] == row[0]]
+                # print(df.at[0, 'ytid'] == '-4RWqM0UCCY')
+                # print("-4RWqM0UCCY" in df['ytid'])
+                # print(df['ytid'].values)
+                print([row[1] for row in csv_data if row[0] in df['ytid'].values])
 
-    def youtube_dl_interface(self):
-        def open_filtered_description_csvs(files_directory): # TODO: merge this function with the deserialize_filtered_csvs method
+    def youtube_dl_interface(self, download_mode):
+        def open_filtered_description_csvs(files_directory, download_mode='all'): # TODO: merge this function with the deserialize_filtered_csvs method
             csv_data = []
-            for filename in self.csv_files:
+            if download_mode == 'balanced':
+                csv_files = ('balanced_train_segments.csv',)
+            elif download_mode == 'unbalanced':
+                csv_files = ('unbalanced_train_segments.csv',)
+            elif download_mode == 'eval':
+                csv_files = ('eval_segments.csv',)
+            elif download_mode == 'all':
+                csv_files = self.csv_files
+
+            for filename in csv_files:
                 with open(os.path.join(os.path.abspath(files_directory), filename)) as csvfile:
                     csv_data.append(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
                     for row in csv_data[-1]:
@@ -143,7 +158,7 @@ class AudioSetDownloader():
 
         def store_audio_filenames(self):
             with open(self.support_files_directory + "/generated_audios.log", "a+") as log_file:
-                print(watch_url + ', ' + self.audio_files_list[-1], file=log_file)
+                print(watch_url + ', "' + self.audio_files_list[-1] + '"', file=log_file)
 
         def my_hook(dict, extension='.wav'):
             if dict['status'] == 'finished':
@@ -157,7 +172,7 @@ class AudioSetDownloader():
 
         clean()
 
-        for watch_url in open_filtered_description_csvs(self.csv_output_directory):
+        for watch_url in open_filtered_description_csvs(self.csv_output_directory, download_mode):
             ydl_opts = {
                 'format': 'bestaudio/best',
                 'postprocessors': [{
@@ -207,9 +222,7 @@ if __name__ == '__main__':
     if args.output:
         audio.filter_description_csvs()
     if args.download:
-        audio.youtube_dl_interface()
-    if args.postprocess_audio:
-        audio.postprocess_audio()
+        audio.youtube_dl_interface(CLIManager.args.download)
     if args.postprocess_audio:
         audio.postprocess_audio()
     if args.print:
