@@ -80,7 +80,7 @@ class AudioSetDownloader():
     def add_name_column_to_df(self, audios_logfile='generated_audios.log'):
         f_csv = self.deserialize_filtered_csvs() # filtered_csvs
         with open(os.path.join(os.path.abspath(self.support_files_directory), audios_logfile)) as csvfile:
-            csv_data = csv.reader(csvfile, quotechar='"', skipinitialspace=True)
+            csv_data = tuple(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
             for f_csv_name, df in f_csv.items():
                 print(f_csv_name)
                 # print(df)

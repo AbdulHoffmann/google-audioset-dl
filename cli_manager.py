@@ -17,3 +17,4 @@ class CLIManager():
 
         if cls.args.verbose:
             print(cls.args)
+            
