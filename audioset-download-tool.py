@@ -1,32 +1,13 @@
-import argparse
 import os
 import csv
 import json
 import re
 
+from cli_manager import CLIManager
 import youtube_dl
 import pandas as pd
 from pydub import AudioSegment
 import pydub.playback
-
-class CLIManager():
-
-    @classmethod
-    def __init__(cls):
-        parser = argparse.ArgumentParser(prog='audioset-download-tool', description='Tool developed for flexibly downloading subsets of the Google AudioSet')
-        parser.add_argument('name', nargs='+' , help='Class name to be searched in the audio set')
-        parser.add_argument('--output-csv', help='Outputs filtered csv files at the files directory', dest='output', action='store_true')
-        parser.add_argument('--download', help='Initiate downloading the audioset. possible values are "all", "balanced", "unbalanced" or "eval"')
-        parser.add_argument('--audio', help='Initiate audio postprocessing', dest='postprocess_audio' , action='store_true')
-        parser.add_argument('--print-df', help='Outputs each of the dataframes to the terminal', dest='print', action='store_true')
-        parser.add_argument('--run_unstable', help='Run unstable functions', dest='unstable' , action='store_true')
-        parser.add_argument('-v','--verbose', help='Outputs verbose', action='store_true')
-
-        cls.args = parser.parse_args()
-
-        if cls.args.verbose:
-            print(cls.args)
-
 
 class AudioSetDownloader():
 
@@ -122,6 +103,7 @@ class AudioSetDownloader():
                 csv_files = self.csv_files
 
             for filename in csv_files:
+                self.subdir_audio_files = re.sub(r'\.csv$', '', filename)
                 with open(os.path.join(os.path.abspath(files_directory), filename)) as csvfile:
                     csv_data.append(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
                     for row in csv_data[-1]:
@@ -162,7 +144,7 @@ class AudioSetDownloader():
 
         def my_hook(dict, extension='.wav'):
             if dict['status'] == 'finished':
-                self.audio_files_list.append(dict['filename'].split('/')[1])
+                self.audio_files_list.append(dict['filename'].split('/')[-1])
                 print("Done downloading '{}', now converting...".format(self.audio_files_list[-1]))
                 self.audio_files_list[-1] = re.sub(r'\..{3}$', '', self.audio_files_list[-1]) + extension
                 store_audio_filenames(self)
@@ -180,7 +162,7 @@ class AudioSetDownloader():
                     'preferredcodec': 'wav',
                     'preferredquality': '192',
                 }],
-                'outtmpl': 'audio_files/%(title)s.%(ext)s',
+                'outtmpl': 'audio_files/' + self.subdir_audio_files + '/%(title)s.%(ext)s',
                 'prefer_ffmpeg': True,
                 'ignoreerrors': True,
                 'logger': MyLogger(watch_url),
