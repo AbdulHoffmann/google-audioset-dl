@@ -6,8 +6,6 @@ import re
 from cli_manager import CLIManager
 import youtube_dl
 import pandas as pd
-from pydub import AudioSegment
-import pydub.playback
 
 class AudioSetDownloader():
 
@@ -77,18 +75,22 @@ class AudioSetDownloader():
                 inter_list.append([row for row in csv_data])
         return {filename: pd.DataFrame(content, columns=['ytid', 'start_seconds', 'end_seconds', 'positive_labels']) for filename, content in zip(self.csv_files, inter_list, )}
 
-    def add_name_column_to_df(self, audios_logfile='generated_audios.log'):
-        f_csv = self.deserialize_filtered_csvs() # filtered_csvs
+    def add_name_column_to_filtered_df(self, audios_logfile='generated_audios.log'):
+        f_csv = self.deserialize_filtered_csvs()
         with open(os.path.join(os.path.abspath(self.support_files_directory), audios_logfile)) as csvfile:
             csv_data = tuple(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
             for f_csv_name, df in f_csv.items():
-                print(f_csv_name)
-                # print(df)
-                # [row[1] if df['ytid'] == row[0]]
-                # print(df.at[0, 'ytid'] == '-4RWqM0UCCY')
-                # print("-4RWqM0UCCY" in df['ytid'])
-                # print(df['ytid'].values)
-                print([row[1] for row in csv_data if row[0] in df['ytid'].values])
+                df['start_seconds'] = pd.to_numeric(df['start_seconds'])
+                df['end_seconds'] = pd.to_numeric(df['end_seconds'])
+                name_series = pd.Series([row[1] for row in csv_data if row[0] in df['ytid'].values])
+                if CLIManager.args.verbose:
+                    print('\n' + f_csv_name)
+                    print(name_series, '\n')
+                df = df.assign(name=name_series).drop_duplicates(('ytid', 'start_seconds', 'end_seconds'))
+                yield (f_csv_name, df)
+
+    def get_filtered_df(self):
+        return {k: v for k, v in self.add_name_column_to_filtered_df()}
 
     def youtube_dl_interface(self, download_mode):
         def open_filtered_description_csvs(files_directory, download_mode='all'): # TODO: merge this function with the deserialize_filtered_csvs method
@@ -170,46 +172,3 @@ class AudioSetDownloader():
             }
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download(['https://www.youtube.com/watch?v=' + watch_url])
-
-    def postprocess_audio(self):
-        print(os.path.abspath(self.support_files_directory))
-
-        def run_postprocess(audio_name):
-                print('\nbeginning ' + audio_name + '...\n')
-                audio = AudioSegment.from_wav(os.path.join(self.audios_directory, audio_name))
-
-                # ten_seconds = 10 * 1000
-                last_5_seconds = audio[-5000:]
-                pydub.playback.play(last_5_seconds)
-
-        if self.audio_files_list:
-            for audio_name in self.audio_files_list:
-                run_postprocess(audio_name)
-        else:
-            with open(os.path.join(os.path.abspath(self.support_files_directory), 'generated_audios.log')) as audio_names:
-                for audio_name in audio_names:
-                    run_postprocess(audio_name.rstrip('\n'))
-
-
-if __name__ == '__main__':
-
-    args = CLIManager().args
-    audio = AudioSetDownloader()
-    audio.deserialize_json()
-    audio.get_ids(args.name)
-    print(f'id found: {audio.ids}')
-    audio.get_child_ids(args.name)
-    print(f'child ids found: {audio.child_ids}')
-
-    if args.output:
-        audio.filter_description_csvs()
-    if args.download:
-        audio.youtube_dl_interface(CLIManager.args.download)
-    if args.postprocess_audio:
-        audio.postprocess_audio()
-    if args.print:
-        for k, df in audio.deserialize_filtered_csvs().items():
-            print(k)
-            print(df)
-    if args.unstable:
-        audio.add_name_column_to_df()
