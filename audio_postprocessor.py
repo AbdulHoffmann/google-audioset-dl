@@ -60,7 +60,7 @@ class AudioProcessor():
             try:
                 audio_file.export(os.path.join(self.export_dir, subdir_name, audio_info["name"].replace('.csv', '')), format=format_.lstrip('.'))
             except FileNotFoundError:
-                print("Directory Tree apparently doesn't exist. Creating it...")
+                print("Directory Tree apparently doesn't exist. Creating it...\n")
                 os.makedirs(os.path.join(self.export_dir, subdir_name))
             else:
                 break
