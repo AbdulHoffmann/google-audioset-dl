@@ -11,4 +11,4 @@ Next Steps
   + [pydoc api](https://www.pydoc.io/pypi/pydub-0.9.5/autoapi/audio_segment/index.html)
   + [github api](https://github.com/jiaaro/pydub/blob/master/API.markdown)
 
-_check out the librosa library as well_
+_check out the [librosa](https://librosa.github.io/) library as well_
