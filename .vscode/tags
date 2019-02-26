@@ -4,42 +4,59 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-AudioSegment	../audioset-download-tool.py	/^from pydub import AudioSegment$/;"	kind:namespace	line:9
-AudioSetDownloader	../audioset-download-tool.py	/^class AudioSetDownloader():$/;"	kind:class	line:12
-CLIManager	../audioset-download-tool.py	/^from cli_manager import CLIManager$/;"	kind:namespace	line:6
+AudioProcessor	../audio_postprocessor.py	/^class AudioProcessor():$/;"	kind:class	line:10
+AudioProcessor	../main.py	/^from audio_postprocessor import AudioProcessor$/;"	kind:namespace	line:3
+AudioSegment	../audio_postprocessor.py	/^from pydub import AudioSegment$/;"	kind:namespace	line:7
+AudioSetDownloader	../audio_postprocessor.py	/^from audioset_download_tool import AudioSetDownloader$/;"	kind:namespace	line:5
+AudioSetDownloader	../audioset_download_tool.py	/^class AudioSetDownloader():$/;"	kind:class	line:10
+AudioSetDownloader	../main.py	/^from audioset_download_tool import AudioSetDownloader$/;"	kind:namespace	line:2
+CLIManager	../audio_postprocessor.py	/^from cli_manager import CLIManager$/;"	kind:namespace	line:6
+CLIManager	../audioset_download_tool.py	/^from cli_manager import CLIManager$/;"	kind:namespace	line:6
 CLIManager	../cli_manager.py	/^class CLIManager():$/;"	kind:class	line:3
-MyLogger	../audioset-download-tool.py	/^        class MyLogger(object):$/;"	kind:class	line:122
-__init__	../audioset-download-tool.py	/^            def __init__(cls, watch_url):$/;"	kind:member	line:125
-__init__	../audioset-download-tool.py	/^    def __init__(self):$/;"	kind:member	line:14
+CLIManager	../main.py	/^from cli_manager import CLIManager$/;"	kind:namespace	line:1
+MyLogger	../audioset_download_tool.py	/^        class MyLogger(object):$/;"	kind:class	line:124
+__init__	../audio_postprocessor.py	/^    def __init__(self, audioset_dl: AudioSetDownloader):$/;"	kind:member	line:12
+__init__	../audioset_download_tool.py	/^            def __init__(cls, watch_url):$/;"	kind:member	line:127
+__init__	../audioset_download_tool.py	/^    def __init__(self):$/;"	kind:member	line:12
 __init__	../cli_manager.py	/^    def __init__(cls):$/;"	kind:member	line:6
-add_name_column_to_df	../audioset-download-tool.py	/^    def add_name_column_to_df(self, audios_logfile='generated_audios.log'):$/;"	kind:member	line:80
+add_name_column_to_filtered_df	../audioset_download_tool.py	/^    def add_name_column_to_filtered_df(self, audios_logfile='generated_audios.log'):$/;"	kind:member	line:78
 argparse	../cli_manager.py	/^import argparse$/;"	kind:namespace	line:1
-args	../audioset-download-tool.py	/^    args = CLIManager().args$/;"	kind:variable	line:196
-audio	../audioset-download-tool.py	/^    audio = AudioSetDownloader()$/;"	kind:variable	line:197
-audioset-download-tool.py	../audioset-download-tool.py	1;"	kind:file	line:1
-clean	../audioset-download-tool.py	/^        def clean():$/;"	kind:function	line:112
+args	../main.py	/^    args = CLIManager().args$/;"	kind:variable	line:7
+audio_postprocessor.py	../audio_postprocessor.py	1;"	kind:file	line:1
+audioset_download_tool.py	../audioset_download_tool.py	1;"	kind:file	line:1
+clean	../audioset_download_tool.py	/^        def clean():$/;"	kind:function	line:114
 cli_manager.py	../cli_manager.py	1;"	kind:file	line:1
-csv	../audioset-download-tool.py	/^import csv$/;"	kind:namespace	line:2
-debug	../audioset-download-tool.py	/^            def debug(self, msg):$/;"	kind:member	line:129
-deserialize_filtered_csvs	../audioset-download-tool.py	/^    def deserialize_filtered_csvs(self):$/;"	kind:member	line:72
-deserialize_google_csvs	../audioset-download-tool.py	/^    def deserialize_google_csvs(self, files_directory='google_audioset'):$/;"	kind:member	line:45
-deserialize_json	../audioset-download-tool.py	/^    def deserialize_json(self, filepath=None):$/;"	kind:member	line:23
-error	../audioset-download-tool.py	/^            def error(cls, msg):$/;"	kind:member	line:136
-filter_description_csvs	../audioset-download-tool.py	/^    def filter_description_csvs(self):$/;"	kind:member	line:52
-get_child_ids	../audioset-download-tool.py	/^    def get_child_ids(self, subset_names: list):$/;"	kind:member	line:33
-get_ids	../audioset-download-tool.py	/^    def get_ids(self, subset_names: list):$/;"	kind:member	line:39
-json	../audioset-download-tool.py	/^import json$/;"	kind:namespace	line:3
-my_hook	../audioset-download-tool.py	/^        def my_hook(dict, extension='.wav'):$/;"	kind:function	line:145
-open_filtered_description_csvs	../audioset-download-tool.py	/^        def open_filtered_description_csvs(files_directory, download_mode='all'): # TODO: merge this function with the deserialize_filtered_csvs method$/;"	kind:function	line:94
-os	../audioset-download-tool.py	/^import os$/;"	kind:namespace	line:1
-pd	../audioset-download-tool.py	/^import pandas as pd$/;"	kind:namespace	line:8
-playback	../audioset-download-tool.py	/^import pydub.playback$/;"	kind:namespace	line:10
-postprocess_audio	../audioset-download-tool.py	/^    def postprocess_audio(self):$/;"	kind:member	line:174
-pydub	../audioset-download-tool.py	/^import pydub.playback$/;"	kind:namespace	line:10
-re	../audioset-download-tool.py	/^import re$/;"	kind:namespace	line:4
-run_postprocess	../audioset-download-tool.py	/^        def run_postprocess(audio_name):$/;"	kind:function	line:177
-serialize_filtered_csvs	../audioset-download-tool.py	/^    def serialize_filtered_csvs(self, filtered_rows: list, filename: str, files_directory):$/;"	kind:member	line:65
-store_audio_filenames	../audioset-download-tool.py	/^        def store_audio_filenames(self):$/;"	kind:function	line:141
-warning	../audioset-download-tool.py	/^            def warning(self, msg):$/;"	kind:member	line:132
-youtube_dl	../audioset-download-tool.py	/^import youtube_dl$/;"	kind:namespace	line:7
-youtube_dl_interface	../audioset-download-tool.py	/^    def youtube_dl_interface(self, download_mode):$/;"	kind:member	line:93
+csv	../audioset_download_tool.py	/^import csv$/;"	kind:namespace	line:2
+debug	../audioset_download_tool.py	/^            def debug(self, msg):$/;"	kind:member	line:131
+deserialize_filtered_csvs	../audioset_download_tool.py	/^    def deserialize_filtered_csvs(self):$/;"	kind:member	line:70
+deserialize_google_csvs	../audioset_download_tool.py	/^    def deserialize_google_csvs(self, files_directory='google_audioset'):$/;"	kind:member	line:43
+deserialize_json	../audioset_download_tool.py	/^    def deserialize_json(self, filepath=None):$/;"	kind:member	line:21
+downl	../main.py	/^    downl = AudioSetDownloader()$/;"	kind:variable	line:8
+error	../audioset_download_tool.py	/^            def error(cls, msg):$/;"	kind:member	line:138
+export_audio	../audio_postprocessor.py	/^    def export_audio(self, audio_file, audio_info, subdir_name, format_='.wav'):    # TODO: Further study ffpmeg and understand possibilities regarding sampling, encoding and channels using the parameters$/;"	kind:member	line:58
+filter_description_csvs	../audioset_download_tool.py	/^    def filter_description_csvs(self):$/;"	kind:member	line:50
+get_child_ids	../audioset_download_tool.py	/^    def get_child_ids(self, subset_names: list):$/;"	kind:member	line:31
+get_filtered_df	../audioset_download_tool.py	/^    def get_filtered_df(self):$/;"	kind:member	line:92
+get_ids	../audioset_download_tool.py	/^    def get_ids(self, subset_names: list):$/;"	kind:member	line:37
+json	../audioset_download_tool.py	/^import json$/;"	kind:namespace	line:3
+main.py	../main.py	1;"	kind:file	line:1
+my_hook	../audioset_download_tool.py	/^        def my_hook(dict, extension='.wav'):$/;"	kind:function	line:147
+open_filtered_description_csvs	../audioset_download_tool.py	/^        def open_filtered_description_csvs(files_directory, download_mode='all'): # TODO: merge this function with the deserialize_filtered_csvs method$/;"	kind:function	line:96
+os	../audio_postprocessor.py	/^import os$/;"	kind:namespace	line:1
+os	../audioset_download_tool.py	/^import os$/;"	kind:namespace	line:1
+pd	../audioset_download_tool.py	/^import pandas as pd$/;"	kind:namespace	line:8
+playback	../audio_postprocessor.py	/^import pydub.playback$/;"	kind:namespace	line:8
+proc	../main.py	/^    proc = AudioProcessor(downl)$/;"	kind:variable	line:9
+pydub	../audio_postprocessor.py	/^import pydub.playback$/;"	kind:namespace	line:8
+re	../audio_postprocessor.py	/^import re$/;"	kind:namespace	line:3
+re	../audioset_download_tool.py	/^import re$/;"	kind:namespace	line:4
+run_trim	../audio_postprocessor.py	/^    def run_trim(self, audio_name):$/;"	kind:member	line:31
+serialize_filtered_csvs	../audioset_download_tool.py	/^    def serialize_filtered_csvs(self, filtered_rows: list, filename: str, files_directory):$/;"	kind:member	line:63
+store_audio_filenames	../audioset_download_tool.py	/^        def store_audio_filenames(self):$/;"	kind:function	line:143
+string	../audio_postprocessor.py	/^import string$/;"	kind:namespace	line:2
+test	../audio_postprocessor.py	/^    def test(self):$/;"	kind:member	line:16
+to_milliseconds	../audio_postprocessor.py	/^        def to_milliseconds(sec_num):$/;"	kind:function	line:35
+trim_audio	../audio_postprocessor.py	/^    def trim_audio(self):$/;"	kind:member	line:19
+warning	../audioset_download_tool.py	/^            def warning(self, msg):$/;"	kind:member	line:134
+youtube_dl	../audioset_download_tool.py	/^import youtube_dl$/;"	kind:namespace	line:7
+youtube_dl_interface	../audioset_download_tool.py	/^    def youtube_dl_interface(self, download_mode):$/;"	kind:member	line:95

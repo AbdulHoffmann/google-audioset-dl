@@ -1,5 +1,14 @@
+How to use it
+---
+
+1. Verify python 3 installation and ffmpeg
+3. `python3 main.py <ontology_class_names>` just outputs ids and child ids
+1. `python3 main.py <ontology_class_names> --output-csv` saves filtered csv files
+5. `python3 main.py <ontology_class_names> --download` downloads the audio files contained in the csv filtered files. The option accepts the following values: `all`, `balanced`, `unbalanced`, `eval`
+6. `python3 main.py <ontology_class_names> --proc-audio` postprocesses the audio, saving the trimmed version on (by default) `./audio_files/trimmed_files`. If instead `-pa` is used, it will only play the sections without actually saving them
+
 Next Steps
-===
+---
 
 + Get channels from each audio
 + Control Sampling, Encoding and Channels

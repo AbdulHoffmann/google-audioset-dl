@@ -19,7 +19,6 @@ if __name__ == '__main__':
         downl.youtube_dl_interface(CLIManager.args.download)
     if args.postprocess_audio:
         proc.trim_audio()
-        # proc.test()
     if args.print:
         for k, df in downl.get_filtered_df().items():
             print('\n', k)
@@ -68,4 +67,6 @@ Duration: 10.0
 
 according to the filtered balanced csv
 
+
+FIXME: if child ids are empty, download actual ids
 """

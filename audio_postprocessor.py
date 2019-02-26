@@ -13,9 +13,6 @@ class AudioProcessor():
         self.audioset_dl = audioset_dl
         self.export_dir = os.path.join(os.path.abspath('audio_files'), 'trimmed_files')
 
-    def test(self):
-        print('test:', self.audioset_dl.child_ids)
-
     def trim_audio(self):
         if CLIManager.args.verbose:
             print('Opening input file from:', os.path.abspath(self.audioset_dl.support_files_directory))
