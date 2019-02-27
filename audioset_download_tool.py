@@ -88,6 +88,7 @@ class AudioSetDownloader():
         f_csv = self.deserialize_filtered_csvs()
         with open(os.path.join(os.path.abspath(self.support_files_directory), audios_logfile)) as csvfile:
             csv_data = tuple(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
+            csv_data = set((tuple(line) for line in csv_data))
             for f_csv_name, df in f_csv.items():
                 df['start_seconds'] = pd.to_numeric(df['start_seconds'])
                 df['end_seconds'] = pd.to_numeric(df['end_seconds'])

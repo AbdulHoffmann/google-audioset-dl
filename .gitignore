@@ -1,3 +1,5 @@
 audio_files
 __pycache__
 .vscode
+google_audioset/.*
+filtered_audioset/.*

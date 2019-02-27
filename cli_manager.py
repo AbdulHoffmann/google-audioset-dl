@@ -11,14 +11,14 @@ class CLIManager():
         parser.add_argument('--output-csv', 
                             help='Outputs filtered csv files at the files directory', dest='output', action='store_true')
         parser.add_argument('-d', '--download',
-                            help='Initiate downloading the audioset. Possible values are "all", "balanced", "unbalanced" or "eval"',
+                            help='Initiate downloading the audioset.',
                             choices=['all','eval','balanced', 'unbalanced'])
         parser.add_argument('-a', '--proc-audio',
                             help='Initiate audio postprocessing',
                             dest='postprocess_audio',
                             action='store_true')
         parser.add_argument('-p','--play-mode',
-                            help='Only runs the audios without exporting the trimmed audio. Possible values are "silent", "normal", "play"',
+                            help='Only runs the audios without exporting the trimmed audio.',
                             choices=['silent','play'])
         parser.add_argument('--print-df',
                             help='Outputs each of the filtered dataframes to the terminal',

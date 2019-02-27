@@ -47,7 +47,7 @@ class AudioProcessor():
                     trimmed_audio = audio[start_ms:end_ms+1]
                     if CLIManager.args.play_mode != "play":
                         self.export_audio(trimmed_audio, row, filename)
-                    elif CLIManager.args.play_mode != "silent":
+                    if CLIManager.args.play_mode != "silent":
                         pydub.playback.play(trimmed_audio)
 
         except FileNotFoundError as e:
@@ -56,6 +56,7 @@ class AudioProcessor():
     def export_audio(self, audio_file, audio_info, subdir_name, format_='.wav'):    # TODO: Further study ffpmeg and understand possibilities regarding sampling, encoding and channels using the parameters
         for attempt in range(10):
             try:
+                subdir_name = subdir_name.replace('.csv', '')
                 audio_file.export(os.path.join(self.export_dir, subdir_name, audio_info["name"].replace('.csv', '')), format=format_.lstrip('.'))
             except FileNotFoundError:
                 print("Directory Tree apparently doesn't exist. Creating it...\n")
