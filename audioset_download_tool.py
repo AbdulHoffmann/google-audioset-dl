@@ -6,6 +6,7 @@ import re
 from cli_manager import CLIManager
 import youtube_dl
 import pandas as pd
+import numpy as np
 
 class AudioSetDownloader():
 
@@ -76,17 +77,28 @@ class AudioSetDownloader():
         return {filename: pd.DataFrame(content, columns=['ytid', 'start_seconds', 'end_seconds', 'positive_labels']) for filename, content in zip(self.csv_files, inter_list, )}
 
     def add_name_column_to_filtered_df(self, audios_logfile='generated_audios.log'):
+        def build_name_series(csv_data, df):
+            my_list = [np.nan] * df.shape[0]
+            for line in csv_data:
+                for k, v in df['ytid'].iteritems():
+                    if v == line[0]:
+                        my_list[k] = line[1]
+            return pd.Series(my_list)
+
         f_csv = self.deserialize_filtered_csvs()
         with open(os.path.join(os.path.abspath(self.support_files_directory), audios_logfile)) as csvfile:
             csv_data = tuple(csv.reader(csvfile, quotechar='"', skipinitialspace=True))
             for f_csv_name, df in f_csv.items():
                 df['start_seconds'] = pd.to_numeric(df['start_seconds'])
                 df['end_seconds'] = pd.to_numeric(df['end_seconds'])
-                name_series = pd.Series([row[1] for row in csv_data if row[0] in df['ytid'].values])
+                name_series = build_name_series(csv_data, df)
+                # name_series = pd.Series([row[1]  if row[0] in df['ytid'].values else np.nan for row in csv_data])
+                # name_series = pd.Series((line[1] if row == line[0] else np.nan for line in csv_data for row in df['ytid']))
+                # mask = pd.Series(df['ytid'].isin((row[0] for row in csv_data)))
+                df = df.assign(name=name_series).drop_duplicates(('ytid', 'start_seconds', 'end_seconds'))
                 if CLIManager.args.verbose:
                     print('\n' + f_csv_name)
                     print(name_series, '\n')
-                df = df.assign(name=name_series).drop_duplicates(('ytid', 'start_seconds', 'end_seconds'))
                 yield (f_csv_name, df)
 
     def get_filtered_df(self):
@@ -140,7 +152,7 @@ class AudioSetDownloader():
                     print(f"Error on file with url: {cls.watch_url}", file=log_file)
                 print(msg)
 
-        def store_audio_filenames(self):
+        def store_audio_filenames():
             with open(self.support_files_directory + "/generated_audios.log", "a+") as log_file:
                 print(watch_url + ', "' + self.audio_files_list[-1] + '"', file=log_file)
 
@@ -148,8 +160,8 @@ class AudioSetDownloader():
             if dict['status'] == 'finished':
                 self.audio_files_list.append(dict['filename'].split('/')[-1])
                 print("Done downloading '{}', now converting...".format(self.audio_files_list[-1]))
-                self.audio_files_list[-1] = re.sub(r'\..{3}$', '', self.audio_files_list[-1]) + extension
-                store_audio_filenames(self)
+                self.audio_files_list[-1] = re.sub(r'\.(?:.{3}|webm)$', '', self.audio_files_list[-1]) + extension
+                store_audio_filenames()
             else:
                 progress = round((dict['downloaded_bytes'] / dict['total_bytes'])*100, 1)
                 print('Progress: {}%'.format(progress))

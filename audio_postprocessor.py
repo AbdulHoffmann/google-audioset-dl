@@ -34,20 +34,21 @@ class AudioProcessor():
 
         try:
             for filename, df in self.audioset_dl.get_filtered_df().items():
+                assert not(df.duplicated().any()), "Duplicate rows found in data."
                 mask = df.index[df['name'].isin([audio_name])]
                 if not(mask.empty):
                     row = df.loc[mask].squeeze()
                     start_ms = to_milliseconds(row['start_seconds'])
                     end_ms = to_milliseconds(row['end_seconds'])
-                    print(f'\nVideo Name: {row["name"]}')
                     print(f'Start Time: {row["start_seconds"]}')
                     print(f'End Time: {row["end_seconds"]}')
                     print(f'Duration: {row["end_seconds"] - row["start_seconds"]}\n')
                     audio = AudioSegment.from_wav(os.path.join(self.audioset_dl.audios_directory, filename.replace('.csv', ''), audio_name))
                     trimmed_audio = audio[start_ms:end_ms+1]
-                    if not(CLIManager.args.only_play):
+                    if CLIManager.args.play_mode != "play":
                         self.export_audio(trimmed_audio, row, filename)
-                    pydub.playback.play(trimmed_audio)
+                    elif CLIManager.args.play_mode != "silent":
+                        pydub.playback.play(trimmed_audio)
 
         except FileNotFoundError as e:
             print(e)

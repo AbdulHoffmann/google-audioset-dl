@@ -27,7 +27,7 @@ if __name__ == '__main__':
         pass
 
 """
-FIXME: Take out duplicates for good:
+FIXME:
 
 Looking into Bone County SD 2011 Interceptor Pursuit - GTA SA.wav...
 
@@ -67,6 +67,11 @@ Duration: 10.0
 
 according to the filtered balanced csv
 
+debugging balanced:
+(df.loc[df['ytid'] == '5quD8nDBLnU'].to_numpy()[0][1:3] == (60.0, 70.0)).all()
+df.loc[df['ytid'] == 'AV76SZTw6z8'].index.values
+df.duplicated().any()
+df.loc[df['name'].str.contains("Ocean City PD", na = False), 'ytid'].values
 
 FIXME: if child ids are empty, download actual ids
 """
