@@ -7,15 +7,39 @@ from cli_manager import CLIManager
 from pydub import AudioSegment
 import pydub.playback
 
+class Logger():
+
+    def __init__(self, audioset_dl: AudioSetDownloader):
+        self.audioset_dl = audioset_dl
+
+    def info(self):
+        pass
+
+    def warn(self, msg):
+        print('\nWarning:', msg, '\n')
+        with open(os.path.join(self.audioset_dl.support_files_directory, "warnings.log"), "a+") as log_file:
+                print(msg, file=log_file)
+
+    def error(self):
+        pass
+
 class AudioProcessor():
 
     def __init__(self, audioset_dl: AudioSetDownloader):
         self.audioset_dl = audioset_dl
         self.export_dir = os.path.join(os.path.abspath('audio_files'), 'trimmed_files')
+        self.logger = Logger(self.audioset_dl)
+
+    def clean(self):
+        warning_file = os.path.join(self.audioset_dl.support_files_directory, "warnings.log")
+        if os.path.exists(warning_file):
+            os.remove(warning_file)
 
     def trim_audio(self):
         if CLIManager.args.verbose:
             print('Opening input file from:', os.path.abspath(self.audioset_dl.support_files_directory))
+
+        self.clean()
 
         if self.audioset_dl.audio_files_list:
             for audio_name in self.audioset_dl.audio_files_list:
@@ -26,8 +50,7 @@ class AudioProcessor():
                     self.run_trim(re.search(r'".+"', audio_name.rstrip('\n')).group().strip('"'))
 
     def run_trim(self, audio_name):
-        print('\nLooking into ' + audio_name + '...\n')
-        # print('\nBeginning to trim ' + audio_name + '...\n')
+        print('\nLooking into \'' + audio_name + '\'...\n')
 
         def to_milliseconds(sec_num):
             return sec_num * 1e3
@@ -38,6 +61,9 @@ class AudioProcessor():
                 mask = df.index[df['name'].isin([audio_name])]
                 if not(mask.empty):
                     row = df.loc[mask].squeeze()
+                    if row.ndim != 1:
+                        self.logger.warn(f'Found files with coinciding names: \'{row.iloc[0]["name"]}\'. Only the last instance which appears in the dataframe will be downloaded and processed.')
+                        row = row.iloc[-1]
                     start_ms = to_milliseconds(row['start_seconds'])
                     end_ms = to_milliseconds(row['end_seconds'])
                     print(f'Start Time: {row["start_seconds"]}')

@@ -93,9 +93,6 @@ class AudioSetDownloader():
                 df['start_seconds'] = pd.to_numeric(df['start_seconds'])
                 df['end_seconds'] = pd.to_numeric(df['end_seconds'])
                 name_series = build_name_series(csv_data, df)
-                # name_series = pd.Series([row[1]  if row[0] in df['ytid'].values else np.nan for row in csv_data])
-                # name_series = pd.Series((line[1] if row == line[0] else np.nan for line in csv_data for row in df['ytid']))
-                # mask = pd.Series(df['ytid'].isin((row[0] for row in csv_data)))
                 df = df.assign(name=name_series).drop_duplicates(('ytid', 'start_seconds', 'end_seconds'))
                 if CLIManager.args.verbose:
                     print('\n' + f_csv_name)
@@ -106,7 +103,7 @@ class AudioSetDownloader():
         return {k: v for k, v in self.add_name_column_to_filtered_df()}
 
     def youtube_dl_interface(self, download_mode):
-        def open_filtered_description_csvs(files_directory, download_mode='all'): # TODO: merge this function with the deserialize_filtered_csvs method
+        def open_filtered_description_csvs(files_directory, download_mode='all'):
             csv_data = []
             if download_mode == 'balanced':
                 csv_files = ('balanced_train_segments.csv',)
@@ -128,11 +125,11 @@ class AudioSetDownloader():
             try:
                 os.remove(os.path.join(os.path.abspath(self.support_files_directory), "errors.log"))
             except Exception as e:
-                print(e)
+                print('Warning:', e)
             try:
                 os.remove(os.path.join(os.path.abspath(self.support_files_directory), "generated_audios.log"))
             except Exception as e:
-                print(e)
+                print('Warning:', e)
 
         class MyLogger(object):
 
