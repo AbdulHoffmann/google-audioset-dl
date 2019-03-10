@@ -20,6 +20,8 @@ if __name__ == '__main__':
         downl.youtube_dl_interface(CLIManager.args.download)
     if args.postprocess_audio:
         proc.trim_audio()
+    if args.examine:
+        proc.examine_trimmed_audio()
     if args.print:
         for k, df in downl.get_filtered_df().items():
             pd.set_option("display.max_rows", 300)

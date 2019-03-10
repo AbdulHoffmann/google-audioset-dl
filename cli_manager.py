@@ -28,6 +28,9 @@ class CLIManager():
                             help='Run unstable functions',
                             dest='unstable',
                             action='store_true')
+        parser.add_argument('--examine',
+                            help='Runs trimmed files examination',
+                            choices=['all','eval','balanced', 'unbalanced'])
         parser.add_argument('-v','--verbose',
                             help='Outputs verbose',
                             action='store_true')

@@ -1,7 +1,8 @@
 import os
 import string
 import re
-
+import wave
+import shutil
 from audioset_download_tool import AudioSetDownloader
 from cli_manager import CLIManager
 from pydub import AudioSegment
@@ -29,7 +30,8 @@ class AudioProcessor():
 
     def __init__(self, audioset_dl: AudioSetDownloader):
         self.audioset_dl = audioset_dl
-        self.export_dir = os.path.join(os.path.abspath('audio_files'), 'trimmed_files')
+        self.export_dir = os.path.join(os.path.abspath(self.audioset_dl.audios_directory), 'trimmed_files')
+        self.selected_dir = os.path.join(os.path.abspath(self.audioset_dl.audios_directory), 'selected_files')
         self.logger = Logger(self.audioset_dl)
 
     def clean(self):
@@ -91,3 +93,46 @@ class AudioProcessor():
                 os.makedirs(os.path.join(self.export_dir, subdir_name))
             else:
                 break
+
+    def examine_trimmed_audio(self):
+        def print_caracteristics():
+            print(f'\nExamining File: "{file_}"')
+            print(f"\nNumber of Channels: {audio.getnchannels()}")
+            print(f"Sampling Rate: {audio.getframerate()}")
+            print(f"Numer of Audio Frames: {audio.getnframes()}")
+            print(f"Compression Type: {audio.getcompname()}")
+
+        def clean():
+            if os.path.exists(self.selected_dir):
+                shutil.rmtree(self.selected_dir)
+            os.mkdir(self.selected_dir)
+
+        def select_audios(desired_channels_number, desired_samplerate_number):
+            """
+            Place the best audios from the trimmed files in a separated file
+            """
+            if audio.getnchannels() == desired_channels_number and audio.getframerate() >= desired_samplerate_number:
+                shutil.copy2(
+                    os.path.join(audios_path, file_),
+                    os.path.join(self.audioset_dl.audios_directory, self.selected_dir, file_)
+                )
+
+        assert CLIManager.args.examine, "examine_trimmed_audio method has no input."
+
+        if CLIManager.args.examine == 'all':
+            folders = ('balanced_train_segments', 'eval_segments', 'unbalanced_train_segments')
+        if CLIManager.args.examine == 'eval':
+            folders = ('eval_segments',)
+        if CLIManager.args.examine == 'balanced':
+            folders = ('balanced_train_segments',)
+        if CLIManager.args.examine == 'unbalanced':
+            folders = ('unbalanced_train_segments',)
+
+        clean()
+
+        for folder in folders:
+            audios_path = os.path.join(self.export_dir, folder)
+            for file_ in os.listdir(audios_path):
+                with wave.open(os.path.join(audios_path, file_), 'rb') as audio:
+                    print_caracteristics()
+                    select_audios(2, 44000)

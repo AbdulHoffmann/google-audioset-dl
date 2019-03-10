@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88e2468b-5374-44b6-90f4-681768668605" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/audio_postprocessor.py" beforeDir="false" afterPath="$PROJECT_DIR$/audio_postprocessor.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/support_files/generated_audios.log" beforeDir="false" afterPath="$PROJECT_DIR$/support_files/generated_audios.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/support_files/warnings.log" beforeDir="false" afterPath="$PROJECT_DIR$/support_files/warnings.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cli_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/cli_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/audio_postprocessor.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+            <state relative-caret-position="486">
+              <caret line="136" column="42" selection-start-line="136" selection-start-column="42" selection-end-line="136" selection-end-column="42" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -43,66 +45,62 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/audioset_download_tool.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="126">
-              <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
+            <state relative-caret-position="105">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="231">
+              <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
               <folding>
-                <element signature="e#199#555#0" />
-                <element signature="e#612#944#0" />
-                <element signature="e#734#838#0" />
-                <element signature="e#1003#1177#0" />
-                <element signature="e#1041#1177#0" />
-                <element signature="e#1082#1177#0" />
-                <element signature="e#1230#1391#0" />
-                <element signature="e#1268#1391#0" />
-                <element signature="e#1309#1391#0" />
-                <element signature="e#1475#1799#0" />
-                <element signature="e#1519#1799#0" />
-                <element signature="e#1615#1799#0" />
-                <element signature="e#1848#2356#0" />
-                <element signature="e#1903#2356#0" />
-                <element signature="e#2006#2263#0" />
-                <element signature="e#2144#2263#0" />
-                <element signature="e#2195#2263#0" />
-                <element signature="e#2458#2743#0" />
-                <element signature="e#2567#2743#0" />
-                <element signature="e#2794#3274#0" />
-                <element signature="e#2862#3097#0" />
-                <element signature="e#2968#3097#0" />
-                <element signature="e#3369#4497#0" />
-                <element signature="e#3418#3656#0" />
-                <element signature="e#3501#3618#0" />
-                <element signature="e#3557#3618#0" />
-                <element signature="e#3826#4497#0" />
-                <element signature="e#4030#4497#0" />
-                <element signature="e#4389#4458#0" />
-                <element signature="e#4538#4601#0" />
-                <element signature="e#4662#8115#0" />
-                <element signature="e#4748#5541#0" />
-                <element signature="e#5211#5541#0" />
-                <element signature="e#5385#5541#0" />
-                <element signature="e#5576#5953#0" />
-                <element signature="e#6000#6508#0" />
-                <element signature="e#6071#6132#0" />
-                <element signature="e#6184#6188#0" />
-                <element signature="e#6242#6246#0" />
-                <element signature="e#6322#6508#0" />
-                <element signature="e#6559#6733#0" />
-                <element signature="e#6792#7321#0" />
-                <element signature="e#6841#7157#0" />
-                <element signature="e#7192#7321#0" />
-                <element signature="e#7451#8115#0" />
-                <element signature="e#7462#7980#0" />
-                <element signature="e#7542#7704#0" />
-                <element signature="e#7543#7703#0" />
+                <element signature="e#0#34#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cli_manager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/audioset_download_tool.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="119" column="16" selection-start-line="119" selection-start-column="16" selection-end-line="119" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>with</find>
+      <find>climana</find>
+      <find>audio_fil</find>
+      <find>audio_file</find>
+      <find>\n</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -110,19 +108,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/cli_manager.py" />
         <option value="$PROJECT_DIR$/test" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/audioset_download_tool.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+        <option value="$PROJECT_DIR$/examine_files.py" />
+        <option value="$PROJECT_DIR$/cli_manager.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/audio_postprocessor.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1920" />
-    <option name="y" value="56" />
-    <option name="width" value="1280" />
-    <option name="height" value="996" />
+    <option name="x" value="751" />
+    <option name="y" value="85" />
+    <option name="width" value="845" />
+    <option name="height" value="631" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -148,9 +149,9 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="GenericSQL" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="Python&#10;GenericSQL" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -210,12 +211,12 @@
       <workItem from="1552243193055" duration="1477000" />
       <workItem from="1552244702752" duration="883000" />
       <workItem from="1552245619093" duration="189000" />
-      <workItem from="1552245853326" duration="1683000" />
+      <workItem from="1552245853326" duration="12437000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12494000" />
+    <option name="totallyTimeSpent" value="23248000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -227,13 +228,14 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1920" y="56" width="1280" height="996" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49073064" weight="0.26904377" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4893617" visible="true" weight="0.25827107" />
       <window_info id="Structure" order="1" sideWeight="0.50926936" side_tool="true" weight="0.2560778" />
-      <window_info id="Favorites" order="2" sideWeight="0.50109893" side_tool="true" weight="0.25202593" />
+      <window_info id="Favorites" order="2" sideWeight="0.5106383" side_tool="true" weight="0.25850892" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3293348" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32857144" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -243,7 +245,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5008104" side_tool="true" weight="0.32857144" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3293348" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.30080482" />
       <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49918962" weight="0.3293348" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -279,90 +281,57 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test" />
-    <entry file="file://$PROJECT_DIR$/cli_manager.py">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="83" selection-start-line="20" selection-start-column="83" selection-end-line="20" selection-end-column="83" />
+        <state relative-caret-position="42">
+          <caret line="2" column="7" lean-forward="true" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/examine_files.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+        <state relative-caret-position="231">
+          <caret line="23" column="21" selection-start-line="23" selection-start-column="21" selection-end-line="23" selection-end-column="21" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.sql">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/cli_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/audioset_download_tool.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-          <folding>
-            <element signature="e#199#555#0" />
-            <element signature="e#612#944#0" />
-            <element signature="e#734#838#0" />
-            <element signature="e#1003#1177#0" />
-            <element signature="e#1041#1177#0" />
-            <element signature="e#1082#1177#0" />
-            <element signature="e#1230#1391#0" />
-            <element signature="e#1268#1391#0" />
-            <element signature="e#1309#1391#0" />
-            <element signature="e#1475#1799#0" />
-            <element signature="e#1519#1799#0" />
-            <element signature="e#1615#1799#0" />
-            <element signature="e#1848#2356#0" />
-            <element signature="e#1903#2356#0" />
-            <element signature="e#2006#2263#0" />
-            <element signature="e#2144#2263#0" />
-            <element signature="e#2195#2263#0" />
-            <element signature="e#2458#2743#0" />
-            <element signature="e#2567#2743#0" />
-            <element signature="e#2794#3274#0" />
-            <element signature="e#2862#3097#0" />
-            <element signature="e#2968#3097#0" />
-            <element signature="e#3369#4497#0" />
-            <element signature="e#3418#3656#0" />
-            <element signature="e#3501#3618#0" />
-            <element signature="e#3557#3618#0" />
-            <element signature="e#3826#4497#0" />
-            <element signature="e#4030#4497#0" />
-            <element signature="e#4389#4458#0" />
-            <element signature="e#4538#4601#0" />
-            <element signature="e#4662#8115#0" />
-            <element signature="e#4748#5541#0" />
-            <element signature="e#5211#5541#0" />
-            <element signature="e#5385#5541#0" />
-            <element signature="e#5576#5953#0" />
-            <element signature="e#6000#6508#0" />
-            <element signature="e#6071#6132#0" />
-            <element signature="e#6184#6188#0" />
-            <element signature="e#6242#6246#0" />
-            <element signature="e#6322#6508#0" />
-            <element signature="e#6559#6733#0" />
-            <element signature="e#6792#7321#0" />
-            <element signature="e#6841#7157#0" />
-            <element signature="e#7192#7321#0" />
-            <element signature="e#7451#8115#0" />
-            <element signature="e#7462#7980#0" />
-            <element signature="e#7542#7704#0" />
-            <element signature="e#7543#7703#0" />
-          </folding>
+        <state relative-caret-position="210">
+          <caret line="119" column="16" selection-start-line="119" selection-start-column="16" selection-end-line="119" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/audio_postprocessor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="47" lean-forward="true" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+        <state relative-caret-position="486">
+          <caret line="136" column="42" selection-start-line="136" selection-start-column="42" selection-end-line="136" selection-end-column="42" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
