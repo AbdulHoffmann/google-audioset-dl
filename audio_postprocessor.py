@@ -7,6 +7,7 @@ from cli_manager import CLIManager
 from pydub import AudioSegment
 import pydub.playback
 
+
 class Logger():
 
     def __init__(self, audioset_dl: AudioSetDownloader):
@@ -22,6 +23,7 @@ class Logger():
 
     def error(self):
         pass
+
 
 class AudioProcessor():
 
