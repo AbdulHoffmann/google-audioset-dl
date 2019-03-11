@@ -94,28 +94,30 @@ class AudioProcessor():
             else:
                 break
 
-    def examine_trimmed_audio(self):
+    def examine_trimmed_audio(self, desired_channels_number, desired_samplerate_number):
         def print_caracteristics():
             print(f'\nExamining File: "{file_}"')
             print(f"\nNumber of Channels: {audio.getnchannels()}")
             print(f"Sampling Rate: {audio.getframerate()}")
             print(f"Numer of Audio Frames: {audio.getnframes()}")
             print(f"Compression Type: {audio.getcompname()}")
+            print("\n")
 
         def clean():
             if os.path.exists(self.selected_dir):
                 shutil.rmtree(self.selected_dir)
             os.mkdir(self.selected_dir)
 
-        def select_audios(desired_channels_number, desired_samplerate_number):
+        def select_audios(channels_number, samplerate_number):
             """
             Place the best audios from the trimmed files in a separated file
             """
-            if audio.getnchannels() == desired_channels_number and audio.getframerate() >= desired_samplerate_number:
+            if audio.getnchannels() == channels_number and audio.getframerate() >= samplerate_number:
                 shutil.copy2(
                     os.path.join(audios_path, file_),
                     os.path.join(self.audioset_dl.audios_directory, self.selected_dir, file_)
                 )
+                print_caracteristics()
 
         assert CLIManager.args.examine, "examine_trimmed_audio method has no input."
 
@@ -134,5 +136,5 @@ class AudioProcessor():
             audios_path = os.path.join(self.export_dir, folder)
             for file_ in os.listdir(audios_path):
                 with wave.open(os.path.join(audios_path, file_), 'rb') as audio:
-                    print_caracteristics()
-                    select_audios(2, 44000)
+                    # print_caracteristics()
+                    select_audios(desired_channels_number, desired_samplerate_number)

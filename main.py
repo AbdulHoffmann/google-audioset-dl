@@ -21,7 +21,7 @@ if __name__ == '__main__':
     if args.postprocess_audio:
         proc.trim_audio()
     if args.examine:
-        proc.examine_trimmed_audio()
+        proc.examine_trimmed_audio(2, 48000)  # stereo 48k
     if args.print:
         for k, df in downl.get_filtered_df().items():
             pd.set_option("display.max_rows", 300)
