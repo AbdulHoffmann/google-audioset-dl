@@ -101,6 +101,7 @@ class AudioProcessor():
             print(f"Sampling Rate: {audio.getframerate()}")
             print(f"Numer of Audio Frames: {audio.getnframes()}")
             print(f"Compression Type: {audio.getcompname()}\n")
+            
         def clean():
             if os.path.exists(self.selected_dir):
                 shutil.rmtree(self.selected_dir)
