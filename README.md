@@ -11,9 +11,6 @@ How to use it
 Next Steps
 ---
 
-+ Get channels from each audio
-+ Control Sampling, Encoding and Channels
-
 + Pydub docs:
   + [github](https://github.com/jiaaro/pydub/)
   + [pydub: AudioSegment](https://media.readthedocs.org/pdf/audiosegment/stable/audiosegment.pdf)

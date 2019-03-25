@@ -4,7 +4,11 @@ class CLIManager():
 
     @classmethod
     def __init__(cls):
-        parser = argparse.ArgumentParser(prog='audioset-download-tool', description='Tool developed for flexibly downloading subsets of the Google AudioSet')
+        parser = argparse.ArgumentParser(
+            prog='audioset-download-tool',
+            description='Tool developed for flexibly downloading subsets of the Google AudioSet'
+        )
+
         parser.add_argument('name', 
                             nargs='+', 
                             help='Class name to be searched in the audio set')
@@ -31,7 +35,16 @@ class CLIManager():
         parser.add_argument('--examine',
                             help='Runs trimmed files examination',
                             choices=['all','eval','balanced', 'unbalanced'])
-        parser.add_argument('-v','--verbose',
+        parser.add_argument('-l', '--label',
+                            help='Applies label to files in folder',
+                            action='store')
+        parser.add_argument('-f', '--folder',
+                            help='Only applicable with --label. Receives the path of the folder to be labeled.',
+                            action='store')
+        parser.add_argument('-r', '--revert',
+                            help='Only applicable with --label. When the option is passed, reverts all labels applied.',
+                            action='store_true')
+        parser.add_argument('-v', '--verbose',
                             help='Outputs verbose',
                             action='store_true')
 

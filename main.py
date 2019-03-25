@@ -22,12 +22,20 @@ if __name__ == '__main__':
         proc.trim_audio()
     if args.examine:
         proc.examine_trimmed_audio(2, 48000)  # stereo 48k
+    if args.label:
+        kwargs = dict()
+        if args.folder:
+            kwargs['target_dir'] = args.folder
+        if args.revert:
+            kwargs['revert'] = args.revert
+        proc.manual_labeler(args.label, **kwargs)
     if args.print:
         for k, df in downl.get_filtered_df().items():
             pd.set_option("display.max_rows", 300)
             print('\n', k)
             print(df, '\n')
             input('\nPress any key to continue...\n')
+
     if args.unstable:
         pass
 
