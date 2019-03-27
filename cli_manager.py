@@ -22,7 +22,9 @@ class CLIManager():
                             dest='postprocess_audio',
                             action='store_true')
         parser.add_argument('-p','--play-mode',
-                            help='Only runs the audios without exporting the trimmed audio.',
+                            help='Modifies audio postprocessing. '
+                                 'If set to "silent", postprocessing will carry out without playing the segments. '
+                                 'If set to "play" will only play the segment without storing it.',
                             choices=['silent','play'])
         parser.add_argument('--print-df',
                             help='Outputs each of the filtered dataframes to the terminal',

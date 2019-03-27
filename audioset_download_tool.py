@@ -1,12 +1,14 @@
 import os
 import csv
 import json
+from glob import glob
 import re
 
 from cli_manager import CLIManager
 import youtube_dl
 import pandas as pd
 import numpy as np
+
 
 class AudioSetDownloader():
 
@@ -49,6 +51,13 @@ class AudioSetDownloader():
                 yield (filename, list(csv_data))
 
     def filter_description_csvs(self):
+
+        def is_empty_nested_list(nested_list):
+            if isinstance(nested_list, list):
+                return all(map(is_empty_nested_list, nested_list))
+            return False
+
+        child_ids_are_empty = is_empty_nested_list(self.child_ids)
         for gen in self.deserialize_google_csvs():
             filtered_list = []
             filename, content = gen
@@ -56,9 +65,14 @@ class AudioSetDownloader():
                 if CLIManager.args.verbose:
                     print([i for i in row])
                 for id_ in row[3].split(','):
-                    for ids in self.child_ids:
-                        if id_ in ids:
-                            filtered_list.append(row)
+                    if not child_ids_are_empty:
+                        for ids in self.child_ids:
+                            if id_ in ids:
+                                filtered_list.append(row)
+                    else:
+                        for ids in self.ids:
+                            if id_ in ids:
+                                filtered_list.append(row)
             self.serialize_filtered_csvs(filtered_list, filename, self.csv_output_directory)
 
     def serialize_filtered_csvs(self, filtered_rows: list, filename: str, files_directory):
@@ -99,8 +113,8 @@ class AudioSetDownloader():
                     print(name_series, '\n')
                 yield (f_csv_name, df)
 
-    def get_filtered_df(self):
-        return {k: v for k, v in self.add_name_column_to_filtered_df()}
+    def get_filtered_df(self, audios_logfile):
+        return {k: v for k, v in self.add_name_column_to_filtered_df(audios_logfile)}
 
     def youtube_dl_interface(self, download_mode):
         def open_filtered_description_csvs(files_directory, download_mode='all'):
@@ -121,15 +135,19 @@ class AudioSetDownloader():
                     for row in csv_data[-1]:
                         yield row[0]
 
-        def clean():
+        def clean_supp_files():
             try:
-                os.remove(os.path.join(os.path.abspath(self.support_files_directory), "errors.log"))
-            except Exception as e:
-                print('Warning:', e)
+                os.remove(
+                    os.path.join(os.path.abspath(self.support_files_directory), "{}_errors.log".format(download_mode))
+                )
+            except FileNotFoundError:
+                print('Warning:', "{}_errors.log not found.".format(download_mode))
             try:
-                os.remove(os.path.join(os.path.abspath(self.support_files_directory), "generated_audios.log"))
-            except Exception as e:
-                print('Warning:', e)
+                os.remove(
+                    os.path.join(os.path.abspath(self.support_files_directory), "{}_generated_audios.log".format(download_mode))
+                )
+            except FileNotFoundError:
+                print('Warning:', "{}_errors.log not found.".format(download_mode))
 
         class MyLogger(object):
 
@@ -146,12 +164,16 @@ class AudioSetDownloader():
 
             @classmethod
             def error(cls, msg):
-                with open(self.support_files_directory + "/errors.log", "a+") as log_file:
+                with open(
+                        os.path.join(self.support_files_directory, "{}_errors.log".format(download_mode)), "a+"
+                ) as log_file:
                     print(f"Error on file with url: {cls.watch_url}", file=log_file)
                 print(msg)
 
         def store_audio_filenames():
-            with open(self.support_files_directory + "/generated_audios.log", "a+") as log_file:
+            with open(
+                    os.path.join(self.support_files_directory, "{}_generated_audios.log".format(download_mode)), "a+"
+            ) as log_file:
                 print(watch_url + ', "' + self.audio_files_list[-1] + '"', file=log_file)
 
         def my_hook(dict, extension='.wav'):
@@ -164,21 +186,30 @@ class AudioSetDownloader():
                 progress = round((dict['downloaded_bytes'] / dict['total_bytes'])*100, 1)
                 print('Progress: {}%'.format(progress))
 
-        clean()
-
-        for watch_url in open_filtered_description_csvs(self.csv_output_directory, download_mode):
-            ydl_opts = {
-                'format': 'bestaudio/best',
-                'postprocessors': [{
-                    'key': 'FFmpegExtractAudio',
-                    'preferredcodec': 'wav',
-                    'preferredquality': '192',
-                }],
-                'outtmpl': 'audio_files/' + self.subdir_audio_files + '/%(title)s.%(ext)s',
-                'prefer_ffmpeg': True,
-                'ignoreerrors': True,
-                'logger': MyLogger(watch_url),
-                'progress_hooks': [my_hook],
-            }
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download(['https://www.youtube.com/watch?v=' + watch_url])
+        clean_supp_files()
+        try:
+            for watch_url in open_filtered_description_csvs(self.csv_output_directory, download_mode):
+                ydl_opts = {
+                    'format': 'bestaudio/best',
+                    'postprocessors': [{
+                        'key': 'FFmpegExtractAudio',
+                        'preferredcodec': 'wav',
+                        'preferredquality': '192',
+                    }],
+                    'outtmpl': os.path.join(self.audios_directory, self.subdir_audio_files, '%(title)s.%(ext)s'),
+                    'prefer_ffmpeg': True,
+                    'ignoreerrors': True,
+                    'logger': MyLogger(watch_url),
+                    'progress_hooks': [my_hook],
+                }
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    ydl.download(['https://www.youtube.com/watch?v=' + watch_url])
+        finally:
+            # Clean up
+            print('\nCleaning up...')
+            globs = (
+                list(set(
+                    glob(os.path.join(self.audios_directory, self.subdir_audio_files, "*.part")) +
+                    glob(os.path.join(self.audios_directory, self.subdir_audio_files, "*.ytdl"))
+                )))
+            list(map(os.remove, globs))

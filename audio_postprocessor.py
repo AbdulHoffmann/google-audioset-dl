@@ -39,30 +39,31 @@ class AudioProcessor():
         if os.path.exists(warning_file):
             os.remove(warning_file)
 
-    def trim_audio(self):
+    def trim_audio(self, download_mode):
         if CLIManager.args.verbose:
             print('Opening input file from:', os.path.abspath(self.audioset_dl.support_files_directory))
 
+        gen_log_name = '{}_generated_audios.log'.format(download_mode)
         self.clean()
 
         if self.audioset_dl.audio_files_list:
             for audio_name in self.audioset_dl.audio_files_list:
-                self.run_trim(re.search(r'\".+\"', audio_name))
+                self.run_trim(re.search(r'\".+\"', audio_name), gen_log_name)
         else:
             with open(
-                    os.path.join(os.path.abspath(self.audioset_dl.support_files_directory), 'generated_audios.log')
+                    os.path.join(os.path.abspath(self.audioset_dl.support_files_directory), gen_log_name)
             ) as audio_names:
                 for audio_name in audio_names:
-                    self.run_trim(re.search(r'".+"', audio_name.rstrip('\n')).group().strip('"'))
+                    self.run_trim(re.search(r'".+"', audio_name.rstrip('\n')).group().strip('"'), gen_log_name)
 
-    def run_trim(self, audio_name):
+    def run_trim(self, audio_name, audios_logfile):
         print('\nLooking into \'' + audio_name + '\'...\n')
 
         def to_milliseconds(sec_num):
             return sec_num * 1e3
 
         try:
-            for filename, df in self.audioset_dl.get_filtered_df().items():
+            for filename, df in self.audioset_dl.get_filtered_df(audios_logfile).items():
                 assert not (df.duplicated().any()), "Duplicate rows found in data."
                 mask = df.index[df['name'].isin([audio_name])]
                 if not (mask.empty):
@@ -113,7 +114,7 @@ class AudioProcessor():
             print(f"Numer of Audio Frames: {audio.getnframes()}")
             print(f"Compression Type: {audio.getcompname()}\n")
 
-        def clean():
+        def clean_selected_folder():
             if os.path.exists(self.selected_dir):
                 shutil.rmtree(self.selected_dir)
             os.mkdir(self.selected_dir)
@@ -140,7 +141,7 @@ class AudioProcessor():
         if CLIManager.args.examine == 'unbalanced':
             folders = ('unbalanced_train_segments',)
 
-        clean()
+        clean_selected_folder()
 
         for folder in folders:
             audios_path = os.path.join(self.export_dir, folder)
